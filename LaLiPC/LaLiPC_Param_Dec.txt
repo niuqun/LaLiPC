@@ -1,0 +1,5 @@
+start_index 90
+end_index 270
+laser_height 290
+least_detect_time 2
+most_missing_time 2
