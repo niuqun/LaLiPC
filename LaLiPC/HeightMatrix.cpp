@@ -61,7 +61,7 @@ void HeightMatrix::AddFrameHeight(int *distance, int length)
 
 	for (int i = start_index_; i <= end_index_; ++i)
 	{
-		distance[i] = laser_height_ - distance[i] / 10 * 19 / 25;
+		distance[i] = laser_height_ - distance[i] / 10 * 38 / 41;
 
 		// Scanning points whose height is less than 1 meter is reset.
 		if (distance[i] < 100)
@@ -121,6 +121,18 @@ void HeightMatrix::AddFrameHeight(int *distance, int length)
 						}
 						catch (RegressResultException e)
 						{
+							// as e is re-thrown, the height_maps is useless
+							// for the class(control is out of this block),
+							// so just clear all data.
+							for (int i = 0; i < row_; ++i)
+							{
+								memset(matrix_[i], 0, column_ * sizeof(int));
+							}
+
+							zero_row_number_ = 0;
+							non_zero_row_number_ = 0;
+							height_maps_.clear();
+
 							throw;
 						}
 					}
